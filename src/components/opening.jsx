@@ -348,7 +348,7 @@ export default function Opening() {
         className={orbitron.className}
         style={{
           position: "absolute",
-          top: isMobile ? "57.8%" : "64%",
+          top: isMobile ? "56.2%" : "62.5%",
           left: "50%",
           transform: "translateX(-50%)",
           color: "#dce9ff",
