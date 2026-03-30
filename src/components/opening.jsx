@@ -41,6 +41,7 @@ export default function Opening() {
   const text = "Xplorica";
   const [showTagline, setShowTagline] = useState(false);
   const [typedTagline, setTypedTagline] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -103,16 +104,19 @@ export default function Opening() {
 
       offCtx.clearRect(0, 0, width, height);
       offCtx.fillStyle = "#fff";
-      const fontSize = Math.min(width * 0.14, 160);
+      const isMobileScene = width < 740;
+      const fontSize = isMobileScene
+        ? Math.min(width * 0.2, 142)
+        : Math.min(width * 0.14, 160);
       const fontFamily = orbitron.style.fontFamily || "sans-serif";
-      offCtx.font = `600 ${fontSize}px ${fontFamily}`;
+      offCtx.font = `${isMobileScene ? 700 : 600} ${fontSize}px ${fontFamily}`;
       offCtx.textAlign = "center";
       offCtx.textBaseline = "middle";
       offCtx.fillText(text, width / 2, height / 2);
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
       const points = [];
-      const step = width < 700 ? 4 : 3;
+      const step = isMobileScene ? 2 : 3;
 
       for (let y = 0; y < height; y += step) {
         for (let x = 0; x < width; x += step) {
@@ -130,6 +134,7 @@ export default function Opening() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = Math.floor(window.innerWidth);
       height = Math.floor(window.innerHeight);
+      setIsMobile(width < 740);
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
@@ -138,7 +143,10 @@ export default function Opening() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const points = buildTextPoints();
-      const particleCount = Math.min(Math.max(points.length * 1.25, 2200), 6200);
+      const isMobileScene = width < 740;
+      const particleCount = isMobileScene
+        ? Math.min(Math.max(points.length * 1.45, 2600), 7600)
+        : Math.min(Math.max(points.length * 1.25, 2200), 6200);
 
       particles.length = 0;
       for (let i = 0; i < particleCount; i += 1) {
@@ -340,11 +348,13 @@ export default function Opening() {
         className={orbitron.className}
         style={{
           position: "absolute",
-          top: "64%",
+          top: isMobile ? "60%" : "64%",
           left: "50%",
           transform: "translateX(-50%)",
           color: "#dce9ff",
-          fontSize: "clamp(0.8rem, 1.6vw, 1.1rem)",
+          fontSize: isMobile
+            ? "clamp(0.72rem, 2.8vw, 0.92rem)"
+            : "clamp(0.8rem, 1.6vw, 1.1rem)",
           letterSpacing: "0.16em",
           textTransform: "uppercase",
           whiteSpace: "nowrap",
@@ -360,12 +370,12 @@ export default function Opening() {
       <ul
         style={{
           position: "absolute",
-          top: "72%",
+          top: isMobile ? "66.2%" : "72%",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
           justifyContent: "center",
-          gap: "20px",
+          gap: isMobile ? "14px" : "20px",
           listStyle: "none",
           opacity: showTagline ? 0.8 : 0,
           transition: "opacity 0.45s ease",
@@ -376,7 +386,12 @@ export default function Opening() {
         {SOCIAL_ICONS.map((icon) => (
           <li key={icon.name}>
             <a style={{ color: "#9ca3af", display: "inline-flex" }}>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" style={{ width: 36, height: 36 }}>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                style={{ width: isMobile ? 30 : 36, height: isMobile ? 30 : 36 }}
+              >
                 <path
                   d={icon.path}
                   clipRule={icon.evenOdd ? "evenodd" : undefined}
