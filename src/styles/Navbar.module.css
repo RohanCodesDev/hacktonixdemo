@@ -1,0 +1,110 @@
+.navWrap {
+  position: fixed;
+  left: 50%;
+  top: 56px;
+  transform: translateX(-50%);
+  width: calc(100% - 20px);
+  z-index: 50;
+}
+
+.menu {
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  width: min(680px, 100%);
+  margin: 0 auto;
+  backdrop-filter: blur(14px) saturate(165%) contrast(128%);
+  -webkit-backdrop-filter: blur(14px) saturate(165%) contrast(128%);
+  background: linear-gradient(120deg, rgba(12, 26, 50, 0.72), rgba(9, 22, 43, 0.64));
+  border: 1px solid rgba(175, 215, 255, 0.22);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+  padding: 6px;
+  border-radius: 999rem;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  transition: width 0.35s var(--ease-spring), gap 0.35s var(--ease-spring),
+    padding 0.35s var(--ease-spring), border-color 0.35s ease;
+}
+
+.menu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.28),
+    inset -2px -2px 8px rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+
+.menu:hover {
+  width: min(820px, 100%);
+  gap: 14px;
+  padding: 7px 12px;
+  border-color: rgba(170, 224, 255, 0.4);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  color: rgba(223, 240, 255, 0.9);
+  text-decoration: none;
+  padding: 7px 8px;
+  border-radius: 999rem;
+  transition: background 0.2s var(--ease-spring), color 0.2s var(--ease-spring),
+    transform 0.25s var(--ease-spring), letter-spacing 0.25s var(--ease-spring);
+}
+
+.item:hover {
+  background: rgba(198, 231, 255, 0.2);
+  color: #95dcff;
+  transform: translateY(-2px) scale(1.03);
+  letter-spacing: 0.02em;
+}
+
+.item svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+}
+
+.item span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.active {
+  background: rgba(209, 237, 255, 0.22);
+  color: #62c8ff;
+}
+
+.item:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 740px) {
+  .menu {
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .menu:hover {
+    width: min(720px, 100%);
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .item {
+    padding: 6px 5px;
+  }
+
+  .item span {
+    font-size: 0.66rem;
+  }
+}

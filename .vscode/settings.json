@@ -1,0 +1,4 @@
+{
+    "github.copilot.chat.claudeAgent.enabled": true,
+    "github.copilot.chat.anthropic.tools.websearch.enabled": true
+}
